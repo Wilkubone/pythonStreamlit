@@ -1,0 +1,20 @@
+div.appview-container.st-emotion-cache-1wrcr25.ea3mdgi9 {
+	background-image: url("https://media.istockphoto.com/id/1466356347/pl/wektor/prognoza-pogody-online-prezenter-z-map%C4%85-opad%C3%B3w-atmosferycznych-w-tle-transmisja-pogody.jpg?s=2048x2048&w=is&k=20&c=Z-X_FKKkqzcWF9Z7ar5n-LiyQOuWRZY46CSGnXiX1QQ=");
+	position: relative;
+	height: 100vh;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+	z-index: 0;
+}
+
+header.st-emotion-cache-1avcm0n.ezrtsby2 {
+	background-color: blue;
+	transition: background-color 0.6s;
+}
+button.st-emotion-cache-6q9sum.ef3psqc4 {
+	background-color: rgb(159, 159, 244);
+}
+button.st-emotion-cache-ch5dnh.ef3psqc5 {
+	background-color: rgb(159, 159, 244);
+}
