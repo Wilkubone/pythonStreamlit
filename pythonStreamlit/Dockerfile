@@ -16,6 +16,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the current directory contents into the container at /app
 COPY app/ /app/
 
+# COPY style.css ./app/style.css
+
+# RUN chmod 644 /app/style.css
+
 # Expose the port that Streamlit runs on
 EXPOSE 8501
 

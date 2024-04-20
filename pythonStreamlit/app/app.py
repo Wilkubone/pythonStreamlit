@@ -33,9 +33,12 @@ def get_wind_speed(dict):
  
 # img = get_img_as_base64("Designer1.jpeg")
 
-
+# def local_css(file_name):
 with open('style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+# Wczytaj plik CSS
+# local_css("style.css")
 
 st.title("Weather Forecast for the Next Days")
 place = st.text_input("Place: ")
