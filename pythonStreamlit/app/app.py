@@ -1,11 +1,14 @@
+# import base64
 import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import requests
 import plotly.express as px
+import os
+from dotenv import load_dotenv
 
-API_KEY = "71872bc24cff61937c28cc1555974ae1"
+API_KEY = os.getenv('API_KEY')
 
 
 def get_data(place, forecast_days=None):
@@ -19,6 +22,18 @@ def get_data(place, forecast_days=None):
 
 def get_wind_speed(dict):
     return dict["wind"]["speed"]
+
+# @st.experimental_memo
+# def get_img_as_base64(file):
+#     with open(file, "rb") as f:
+#         data = f.read()
+#         return base64.b64encode(data).decode
+ 
+# img = get_img_as_base64("Designer1.jpeg")
+
+
+with open('style.css') as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 st.title("Weather Forecast for the Next Days")
 place = st.text_input("Place: ")
@@ -35,7 +50,6 @@ if place:
         if option == "Temperature":
             temperatures = [dict["main"]["temp"] for dict in filtered_data]
             dates = [dict["dt_txt"] for dict in filtered_data]
-            # Create a temperature plot
             figure = px.line(x=dates, y=temperatures, labels={"x": "Dates", "y": "Temperature (C)"})
             st.plotly_chart(figure)
 
@@ -47,24 +61,16 @@ if place:
             dates = [dict["dt_txt"] for dict in filtered_data]
             image_paths = [images[condition] for condition in sky_conditions]
             st.image(image_paths, width=115, caption=dates)
-        if option == "Wind Speed":
-            images = {"Wind": "images/wind.png"}
+        if option == "Wind":
+            images = {"Wind": "images/wind.jpg"}
             wind_conditions = [dict["weather"][0]["main"] for dict in filtered_data]
             wind_speeds = [get_wind_speed(dict) for dict in filtered_data]
             dates = [dict["dt_txt"] for dict in filtered_data]
-            
-            # Check if wind speed exceeds 2 km/h
             wind_anomaly_indices = [i for i, speed in enumerate(wind_speeds) if speed > 20]
 
-            # Create a list of indices for wind anomalies
-            wind_anomaly_paths = [index for index, speed in enumerate(wind_speeds) if index in wind_anomaly_indices]
-            image_paths = [images[condition] for condition in wind_conditions]
-            
-            st.write("Wind anomaly (speed above 2 km/h):")
-            st.image([image_paths[i] for i in wind_anomaly_paths], width=115, caption=[dates[i] for i in wind_anomaly_paths])
-
-
-           
+            st.write("Wind anomaly (speed above 20 km/h):")
+            for i in wind_anomaly_indices:
+                st.image(images["Wind"], width=115, caption=dates[i])
 
     except KeyError:
         st.write("That place does not exist.")
